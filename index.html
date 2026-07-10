@@ -1080,6 +1080,360 @@ transform:scale(1.04);
 
 }
 
+/* ================= SAVINGS / DONATIONS ================= */
+
+.saving-card{
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+border-radius:20px;
+
+padding:25px;
+
+margin-bottom:20px;
+
+box-shadow:0 0 20px rgba(0,255,136,.15);
+
+transition:.3s;
+
+}
+
+.saving-card:hover{
+
+transform:translateY(-6px);
+
+box-shadow:0 0 30px #00ff88;
+
+}
+
+.saving-card .saving-head{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:10px;
+
+gap:10px;
+
+}
+
+.saving-card h3{
+
+color:#00ff88;
+
+text-shadow:0 0 10px #00ff88;
+
+font-size:20px;
+
+}
+
+.saving-card p{
+
+color:#ccc;
+
+margin-bottom:18px;
+
+font-size:15px;
+
+line-height:1.5;
+
+}
+
+.chip-in-btn{
+
+padding:12px 26px;
+
+border:none;
+
+border-radius:12px;
+
+background:#00ff88;
+
+color:#000;
+
+font-weight:bold;
+
+font-size:15px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.chip-in-btn:hover{
+
+background:#00cc6d;
+
+transform:scale(1.05);
+
+box-shadow:0 0 20px #00ff88;
+
+}
+
+.admin-add-btn.green{
+
+border-color:#00ff88;
+
+color:#00ff88;
+
+background:rgba(0,255,136,.08);
+
+}
+
+.admin-add-btn.green:hover{
+
+background:#00ff88;
+
+color:#000;
+
+box-shadow:0 0 20px #00ff88;
+
+}
+
+.card-number-display{
+
+background:rgba(0,255,136,.08);
+
+border:1px solid rgba(0,255,136,.4);
+
+border-radius:14px;
+
+padding:16px;
+
+text-align:center;
+
+font-size:20px;
+
+letter-spacing:1px;
+
+color:#00ff88;
+
+margin:14px 0;
+
+font-weight:bold;
+
+word-break:break-word;
+
+}
+
+#confettiCanvas{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+z-index:999;
+
+display:none;
+
+}
+
+/* ================= MOBILE RESPONSIVE ================= */
+
+@media (max-width: 768px){
+
+header{
+
+flex-wrap:wrap;
+
+height:auto;
+
+padding:16px 18px;
+
+gap:14px;
+
+}
+
+.logo h1{
+
+font-size:19px;
+
+letter-spacing:1px;
+
+}
+
+.shield{
+
+width:42px;
+
+height:50px;
+
+font-size:15px;
+
+}
+
+.header-right{
+
+flex-direction:column;
+
+width:100%;
+
+gap:12px;
+
+}
+
+nav{
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+gap:8px;
+
+width:100%;
+
+}
+
+nav button{
+
+padding:9px 14px;
+
+font-size:13px;
+
+}
+
+.admin-btn{
+
+width:100%;
+
+font-size:13px;
+
+padding:10px 14px;
+
+}
+
+.hero{
+
+height:auto;
+
+padding:60px 20px 50px;
+
+}
+
+.hero h2{
+
+font-size:30px;
+
+}
+
+.hero p{
+
+font-size:15px;
+
+}
+
+.join{
+
+padding:14px 26px;
+
+font-size:15px;
+
+width:100%;
+
+max-width:340px;
+
+}
+
+.container{
+
+padding:24px 16px;
+
+}
+
+.section-title{
+
+font-size:26px;
+
+}
+
+.card{
+
+padding:20px;
+
+}
+
+.rank{
+
+flex-direction:column;
+
+text-align:center;
+
+gap:12px;
+
+padding:18px;
+
+}
+
+.rank-info h4{
+
+font-size:19px;
+
+}
+
+.saving-card .saving-head{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+}
+
+.chip-in-btn{
+
+width:100%;
+
+}
+
+.modal,.app-modal,.success-modal{
+
+max-width:94vw;
+
+padding:24px 20px;
+
+max-height:85vh;
+
+}
+
+.radio-group{
+
+flex-direction:column;
+
+}
+
+.modal-buttons{
+
+flex-direction:column;
+
+}
+
+}
+
+@media (max-width: 420px){
+
+.hero h2{
+
+font-size:24px;
+
+}
+
+.logo h1{
+
+display:none;
+
+}
+
+}
+
 </style>
 
 </head>
@@ -1109,6 +1463,8 @@ BLC
 <button onclick="document.getElementById('news').scrollIntoView()">Новости</button>
 
 <button onclick="document.getElementById('hierarchy').scrollIntoView()">Иерархия</button>
+
+<button onclick="document.getElementById('savings').scrollIntoView()">Накопления</button>
 
 </nav>
 
@@ -1232,6 +1588,18 @@ BLC
 </div>
 
 <button class="admin-add-btn" id="addRankBtn" onclick="openRankForm()">+ Добавить роль в иерархию</button>
+
+</div>
+
+<div class="container" id="savings">
+
+<h2 class="section-title">💰 Накопления</h2>
+
+<p class="section-sub">Общие сборы клана — вы можете скинуться на любой из них</p>
+
+<div id="savingsList"></div>
+
+<button class="admin-add-btn green" id="addSavingBtn" onclick="openSavingForm()">+ Добавить сбор</button>
 
 </div>
 
@@ -1398,6 +1766,65 @@ BLC
 
 </div>
 
+<!-- ================= SAVING CREATE MODAL ================= -->
+
+<div class="overlay" id="savingOverlay">
+
+<div class="modal">
+
+<h3 style="color:#00ff88;text-shadow:0 0 10px #00ff88;">💰 Новый сбор</h3>
+
+<label>Название сбора</label>
+<input type="text" id="savingTitle" placeholder="Например: Новая форма для клана">
+
+<label>Описание — на что собираем</label>
+<textarea id="savingDesc" rows="3" placeholder="На что собираем деньги..."></textarea>
+
+<label>Номер карты для перевода</label>
+<input type="text" id="savingCard" placeholder="0000 0000 0000 0000">
+
+<div class="modal-buttons">
+<button class="btn-secondary" onclick="closeSavingForm()">Отмена</button>
+<button class="btn-primary" style="background:#00ff88;" onclick="submitSaving()">Добавить</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= DONATE (СКИНУТЬСЯ) MODAL ================= -->
+
+<div class="overlay" id="donateOverlay">
+
+<div class="modal">
+
+<h3 style="color:#00ff88;text-shadow:0 0 10px #00ff88;">💸 Скинуться</h3>
+
+<p id="donateSavingTitle" style="color:#ccc;font-size:14px;"></p>
+
+<label>Номер карты для перевода</label>
+<div class="card-number-display" id="donateCardNumber"></div>
+
+<label>Имя</label>
+<input type="text" id="donateName" placeholder="Ваше имя" oninput="validateDonate()">
+
+<label>Фамилия</label>
+<input type="text" id="donateSurname" placeholder="Ваша фамилия" oninput="validateDonate()">
+
+<label>Сумма перевода (₽)</label>
+<input type="text" id="donateAmount" placeholder="Например: 500" oninput="validateDonate()">
+
+<div class="modal-buttons">
+<button class="btn-secondary" onclick="closeDonate()">Отмена</button>
+<button class="btn-primary" style="background:#00ff88;" id="donateSubmitBtn" disabled onclick="submitDonate()">Далее</button>
+</div>
+
+</div>
+
+</div>
+
+<canvas id="confettiCanvas"></canvas>
+
 <script>
 
 /* =====================================================================
@@ -1538,6 +1965,8 @@ document.getElementById('addNewsBtn').classList.add('show');
 
 document.getElementById('addRankBtn').classList.add('show');
 
+document.getElementById('addSavingBtn').classList.add('show');
+
 }else{
 
 btn.textContent = '🔑 Войти как Гл. Админ';
@@ -1547,6 +1976,8 @@ btn.classList.remove('logged-in');
 document.getElementById('addNewsBtn').classList.remove('show');
 
 document.getElementById('addRankBtn').classList.remove('show');
+
+document.getElementById('addSavingBtn').classList.remove('show');
 
 }
 
@@ -1716,6 +2147,284 @@ updateAdminUI();
 
 }
 
+/* ---------- SAVINGS (Firestore, видно всем в реальном времени) ---------- */
+
+function openSavingForm(){
+
+document.getElementById('savingOverlay').classList.add('open');
+
+}
+
+function closeSavingForm(){
+
+document.getElementById('savingOverlay').classList.remove('open');
+
+document.getElementById('savingTitle').value = '';
+
+document.getElementById('savingDesc').value = '';
+
+document.getElementById('savingCard').value = '';
+
+}
+
+function submitSaving(){
+
+const title = document.getElementById('savingTitle').value.trim();
+
+const desc = document.getElementById('savingDesc').value.trim();
+
+const card = document.getElementById('savingCard').value.trim();
+
+if(!title || !desc || !card) return;
+
+db.collection('savings').add({
+
+title: title,
+
+desc: desc,
+
+card: card,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).then(()=>{
+
+closeSavingForm();
+
+}).catch(err=>{
+
+alert('Не удалось создать сбор: ' + err.message);
+
+});
+
+}
+
+function deleteSaving(id){
+
+db.collection('savings').doc(id).delete();
+
+}
+
+function renderSavingsFromDocs(docs){
+
+const list = document.getElementById('savingsList');
+
+list.innerHTML = '';
+
+if(docs.length === 0){
+
+list.innerHTML = '<p style="color:#888;text-align:center;margin-bottom:20px;">Активных сборов пока нет.</p>';
+
+return;
+
+}
+
+docs.forEach(doc=>{
+
+const s = doc.data();
+
+const div = document.createElement('div');
+
+div.className = 'saving-card';
+
+div.innerHTML = `
+
+<div class="saving-head">
+
+<h3>💰 ${escapeHtml(s.title)}</h3>
+
+<button class="remove-x" onclick="deleteSaving('${doc.id}')">✕</button>
+
+</div>
+
+<p>${escapeHtml(s.desc)}</p>
+
+<button class="chip-in-btn" onclick="openDonate('${doc.id}','${escapeHtml(s.title).replace(/'/g,"\\'")}','${escapeHtml(s.card).replace(/'/g,"\\'")}')">Скинуться</button>
+
+`;
+
+list.appendChild(div);
+
+});
+
+updateAdminUI();
+
+}
+
+/* ---------- DONATE (СКИНУТЬСЯ) ---------- */
+
+let currentSavingId = null;
+
+function openDonate(id, title, card){
+
+currentSavingId = id;
+
+document.getElementById('donateSavingTitle').textContent = 'Сбор: ' + title;
+
+document.getElementById('donateCardNumber').textContent = card;
+
+document.getElementById('donateName').value = '';
+
+document.getElementById('donateSurname').value = '';
+
+document.getElementById('donateAmount').value = '';
+
+validateDonate();
+
+document.getElementById('donateOverlay').classList.add('open');
+
+}
+
+function closeDonate(){
+
+document.getElementById('donateOverlay').classList.remove('open');
+
+}
+
+function validateDonate(){
+
+const name = document.getElementById('donateName').value.trim();
+
+const surname = document.getElementById('donateSurname').value.trim();
+
+const amount = document.getElementById('donateAmount').value.trim();
+
+document.getElementById('donateSubmitBtn').disabled = !(name && surname && amount);
+
+}
+
+function submitDonate(){
+
+const name = document.getElementById('donateName').value.trim();
+
+const surname = document.getElementById('donateSurname').value.trim();
+
+const amount = document.getElementById('donateAmount').value.trim();
+
+if(!name || !surname || !amount) return;
+
+db.collection('donations').add({
+
+savingId: currentSavingId,
+
+name: name,
+
+surname: surname,
+
+amount: amount,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).catch(err=>{
+
+console.error('Firestore donation error:', err);
+
+});
+
+closeDonate();
+
+launchConfetti();
+
+setTimeout(()=>{
+
+document.getElementById('hero').scrollIntoView();
+
+}, 1800);
+
+}
+
+/* ---------- CONFETTI ---------- */
+
+function launchConfetti(){
+
+const canvas = document.getElementById('confettiCanvas');
+
+canvas.style.display = 'block';
+
+canvas.width = window.innerWidth;
+
+canvas.height = window.innerHeight;
+
+const ctx = canvas.getContext('2d');
+
+const colors = ['#00ff88','#00cc6d','#ffd700','#00e5ff','#ff5c5c','#c084fc'];
+
+const pieces = [];
+
+for(let i=0;i<160;i++){
+
+pieces.push({
+
+x: Math.random()*canvas.width,
+
+y: -20 - Math.random()*canvas.height*0.6,
+
+size: 6+Math.random()*7,
+
+color: colors[Math.floor(Math.random()*colors.length)],
+
+speedY: 2.5+Math.random()*3.5,
+
+speedX: -2+Math.random()*4,
+
+rotation: Math.random()*360,
+
+rotationSpeed: -8+Math.random()*16
+
+});
+
+}
+
+let frame = 0;
+
+const maxFrames = 200;
+
+function animate(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+pieces.forEach(p=>{
+
+p.y += p.speedY;
+
+p.x += p.speedX;
+
+p.rotation += p.rotationSpeed;
+
+ctx.save();
+
+ctx.translate(p.x,p.y);
+
+ctx.rotate(p.rotation*Math.PI/180);
+
+ctx.fillStyle = p.color;
+
+ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+
+ctx.restore();
+
+});
+
+frame++;
+
+if(frame < maxFrames){
+
+requestAnimationFrame(animate);
+
+}else{
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+canvas.style.display = 'none';
+
+}
+
+}
+
+animate();
+
+}
+
 /* ---------- APPLICATION FORM ---------- */
 
 function openApplication(){
@@ -1816,9 +2525,23 @@ createdAt: firebase.firestore.FieldValue.serverTimestamp()
 
 }).catch(err=>{
 
-alert('ОШИБКА Firestore: ' + err.message);
+console.error('Firestore application error:', err);
 
 });
+
+// таймаут, чтобы форма не висела вечно при плохом/заблокированном интернете
+
+function withTimeout(promise, ms){
+
+return Promise.race([
+
+promise,
+
+new Promise((resolve)=>setTimeout(()=>resolve({timedOut:true}), ms))
+
+]);
+
+}
 
 // отправляем письма админам
 
@@ -1826,7 +2549,9 @@ const messageText = `Новая заявка на вступление в Brich 
 
 const emailPromises = ADMIN_EMAILS.map(email=>
 
-emailjs.send(service_7xkbnel, template_j0x7mvq, {
+withTimeout(
+
+emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
 
 to_email: email,
 
@@ -1838,13 +2563,13 @@ applicant_company: company,
 
 message: messageText
 
-}).then(res=>{
+}),
 
-alert('EmailJS: письмо успешно отправлено на ' + email);
+15000
 
-}).catch(err=>{
+).catch(err=>{
 
-alert('ОШИБКА EmailJS для ' + email + ':\n' + JSON.stringify(err));
+console.error('EmailJS error for', email, err);
 
 })
 
@@ -1923,6 +2648,18 @@ renderRanksFromDocs(snapshot.docs);
 }, err=>{
 
 console.error('Firestore ranks error:', err);
+
+});
+
+// живая синхронизация накоплений для ВСЕХ посетителей
+
+db.collection('savings').orderBy('createdAt','asc').onSnapshot(snapshot=>{
+
+renderSavingsFromDocs(snapshot.docs);
+
+}, err=>{
+
+console.error('Firestore savings error:', err);
 
 });
 
