@@ -74,29 +74,25 @@ gap:15px;
 
 }
 
-.shield{
+.shield-svg{
 
-width:60px;
+width:58px;
 
-height:70px;
+height:67px;
 
-background:linear-gradient(#0ff,#0057ff);
+flex-shrink:0;
 
-clip-path:polygon(50% 0%,100% 20%,100% 65%,50% 100%,0% 65%,0% 20%);
+filter:drop-shadow(0 0 12px rgba(0,255,255,.5));
 
-display:flex;
+transition:.3s;
 
-justify-content:center;
+}
 
-align-items:center;
+.logo:hover .shield-svg{
 
-font-size:22px;
+filter:drop-shadow(0 0 20px rgba(0,255,255,.8));
 
-font-weight:bold;
-
-color:white;
-
-box-shadow:0 0 30px cyan;
+transform:scale(1.04);
 
 }
 
@@ -330,9 +326,9 @@ gap:18px;
 
 display:flex;
 
-align-items:center;
+flex-direction:column;
 
-gap:22px;
+gap:14px;
 
 background:rgba(255,255,255,.05);
 
@@ -355,6 +351,16 @@ transition:.3s;
 transform:translateX(10px);
 
 box-shadow:0 0 30px cyan;
+
+}
+
+.rank-top{
+
+display:flex;
+
+align-items:center;
+
+gap:22px;
 
 }
 
@@ -395,6 +401,118 @@ margin-bottom:4px;
 color:#bbb;
 
 font-size:15px;
+
+}
+
+.rank-members{
+
+display:flex;
+
+flex-wrap:wrap;
+
+gap:8px;
+
+align-items:center;
+
+padding-top:12px;
+
+border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.member-pill{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:6px;
+
+background:rgba(0,255,255,.08);
+
+border:1px solid rgba(0,255,255,.25);
+
+border-radius:20px;
+
+padding:6px 12px;
+
+font-size:13px;
+
+color:#e0f7ff;
+
+}
+
+.member-remove{
+
+display:none;
+
+background:transparent;
+
+border:none;
+
+color:#ff5c5c;
+
+cursor:pointer;
+
+font-size:13px;
+
+padding:0;
+
+line-height:1;
+
+}
+
+.member-remove.show{
+
+display:inline-block;
+
+}
+
+.member-empty{
+
+color:#666;
+
+font-size:13px;
+
+font-style:italic;
+
+}
+
+.add-member-btn{
+
+display:none;
+
+background:transparent;
+
+border:1px dashed cyan;
+
+color:cyan;
+
+border-radius:20px;
+
+padding:6px 14px;
+
+font-size:13px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.add-member-btn.show{
+
+display:inline-block;
+
+}
+
+.add-member-btn:hover{
+
+background:cyan;
+
+color:black;
+
+box-shadow:0 0 15px cyan;
 
 }
 
@@ -902,6 +1020,48 @@ background:rgba(255,255,255,.04);
 
 }
 
+.fee-box{
+
+margin-top:18px;
+
+padding:16px 18px;
+
+border-radius:14px;
+
+border:1px solid rgba(255,215,0,.4);
+
+background:rgba(255,215,0,.08);
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+}
+
+.fee-box h4{
+
+color:gold;
+
+font-size:15px;
+
+margin:0;
+
+}
+
+.fee-box p{
+
+color:gold;
+
+font-size:20px;
+
+font-weight:bold;
+
+margin:0;
+
+}
+
 .rules-box h4{
 
 color:cyan;
@@ -1178,6 +1338,64 @@ box-shadow:0 0 20px #00ff88;
 
 }
 
+.progress-wrap{
+
+margin-bottom:16px;
+
+}
+
+.progress-track{
+
+width:100%;
+
+height:14px;
+
+background:rgba(255,255,255,.08);
+
+border-radius:10px;
+
+overflow:hidden;
+
+border:1px solid rgba(0,255,136,.25);
+
+}
+
+.progress-fill{
+
+height:100%;
+
+background:linear-gradient(90deg,#00cc6d,#00ff88);
+
+border-radius:10px;
+
+transition:width .6s ease;
+
+box-shadow:0 0 10px #00ff88;
+
+}
+
+.progress-label{
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:13px;
+
+color:#9ca3af;
+
+margin-top:6px;
+
+}
+
+.progress-label .collected{
+
+color:#00ff88;
+
+font-weight:bold;
+
+}
+
 .admin-add-btn.green{
 
 border-color:#00ff88;
@@ -1262,13 +1480,11 @@ letter-spacing:1px;
 
 }
 
-.shield{
+.shield-svg{
 
-width:42px;
+width:40px;
 
-height:50px;
-
-font-size:15px;
+height:46px;
 
 }
 
@@ -1364,13 +1580,23 @@ padding:20px;
 
 .rank{
 
+padding:18px;
+
+}
+
+.rank-top{
+
 flex-direction:column;
 
 text-align:center;
 
-gap:12px;
+gap:10px;
 
-padding:18px;
+}
+
+.rank-members{
+
+justify-content:center;
 
 }
 
@@ -1444,9 +1670,42 @@ display:none;
 
 <div class="logo">
 
-<div class="shield">
-BLC
-</div>
+<svg class="shield-svg" viewBox="0 0 100 116" xmlns="http://www.w3.org/2000/svg">
+
+<defs>
+
+<linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#7CFCFF"/>
+<stop offset="45%" stop-color="#00e5ff"/>
+<stop offset="100%" stop-color="#0057ff"/>
+</linearGradient>
+
+<linearGradient id="shieldInner" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#0a1620"/>
+<stop offset="100%" stop-color="#050a12"/>
+</linearGradient>
+
+<filter id="shieldGlow" x="-50%" y="-50%" width="200%" height="200%">
+<feGaussianBlur stdDeviation="3.5" result="blur"/>
+<feMerge>
+<feMergeNode in="blur"/>
+<feMergeNode in="SourceGraphic"/>
+</feMerge>
+</filter>
+
+</defs>
+
+<polygon points="50,3 94,22 94,64 50,113 6,64 6,22" fill="url(#shieldGrad)" filter="url(#shieldGlow)"/>
+
+<polygon points="50,12 85,28 85,61 50,102 15,61 15,28" fill="url(#shieldInner)"/>
+
+<polygon points="50,12 85,28 85,61 50,102 15,61 15,28" fill="none" stroke="#00fff2" stroke-width="1" opacity="0.5"/>
+
+<text x="50" y="66" font-family="Arial Black, Arial, sans-serif" font-size="30" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">BLC</text>
+
+<line x1="30" y1="76" x2="70" y2="76" stroke="#00fff2" stroke-width="1.5" opacity="0.7"/>
+
+</svg>
 
 <h1>BRICH LIBERTY CLAN</h1>
 
@@ -1538,51 +1797,75 @@ BLC
 <div class="rank-list" id="rankList">
 
 <div class="rank rank-1">
+<div class="rank-top">
 <div class="rank-icon">👑</div>
 <div class="rank-info">
 <h4>Главный админ</h4>
 <p>Высшее руководство клана. Принимает ключевые решения, назначает админов.</p>
 </div>
 </div>
+<div class="rank-members" id="members-glavniy"></div>
+<button class="add-member-btn" onclick="openMemberForm('glavniy','Главный админ')">+ Добавить человека</button>
+</div>
 
 <div class="rank rank-2">
+<div class="rank-top">
 <div class="rank-icon">⭐</div>
 <div class="rank-info">
 <h4>Админ</h4>
 <p>Управление кланом, модерация, организация мероприятий и турниров.</p>
 </div>
 </div>
+<div class="rank-members" id="members-admin"></div>
+<button class="add-member-btn" onclick="openMemberForm('admin','Админ')">+ Добавить человека</button>
+</div>
 
 <div class="rank rank-3">
+<div class="rank-top">
 <div class="rank-icon">💎</div>
 <div class="rank-info">
 <h4>VIP участник</h4>
 <p>Привилегированный статус за особый вклад или активность в клане.</p>
 </div>
 </div>
+<div class="rank-members" id="members-vip"></div>
+<button class="add-member-btn" onclick="openMemberForm('vip','VIP участник')">+ Добавить человека</button>
+</div>
 
 <div class="rank rank-4">
+<div class="rank-top">
 <div class="rank-icon">🎮</div>
 <div class="rank-info">
 <h4>Участник</h4>
 <p>Полноправный член клана, участвует в жизни сообщества.</p>
 </div>
 </div>
+<div class="rank-members" id="members-uchastnik"></div>
+<button class="add-member-btn" onclick="openMemberForm('uchastnik','Участник')">+ Добавить человека</button>
+</div>
 
 <div class="rank rank-5">
+<div class="rank-top">
 <div class="rank-icon">🛡️</div>
 <div class="rank-info">
 <h4>Охранник</h4>
 <p>Следит за порядком, безопасностью и соблюдением правил клана.</p>
 </div>
 </div>
+<div class="rank-members" id="members-ohrannik"></div>
+<button class="add-member-btn" onclick="openMemberForm('ohrannik','Охранник')">+ Добавить человека</button>
+</div>
 
 <div class="rank rank-6">
+<div class="rank-top">
 <div class="rank-icon">🧹</div>
 <div class="rank-info">
 <h4>Уборщик</h4>
 <p>Поддерживает чистоту и порядок на ресурсах клана.</p>
 </div>
+</div>
+<div class="rank-members" id="members-uborshik"></div>
+<button class="add-member-btn" onclick="openMemberForm('uborshik','Уборщик')">+ Добавить человека</button>
 </div>
 
 </div>
@@ -1686,6 +1969,28 @@ BLC
 
 </div>
 
+<!-- ================= MEMBER MODAL ================= -->
+
+<div class="overlay" id="memberOverlay">
+
+<div class="modal">
+
+<h3>👤 Новый участник</h3>
+
+<p id="memberRankLabel" style="color:#aaa;font-size:14px;text-align:center;margin-bottom:10px;"></p>
+
+<label>Имя и фамилия</label>
+<input type="text" id="memberName" placeholder="Например: Иван Петров">
+
+<div class="modal-buttons">
+<button class="btn-secondary" onclick="closeMemberForm()">Отмена</button>
+<button class="btn-primary" onclick="submitMember()">Добавить</button>
+</div>
+
+</div>
+
+</div>
+
 <!-- ================= APPLICATION FORM ================= -->
 
 <div class="overlay" id="applicationOverlay">
@@ -1719,6 +2024,11 @@ BLC
 <div class="warning-box">
 <h4>⚠️ Предупреждение</h4>
 <p>Если на территории будет твориться беспорядок, мы оставляем за собой право выгнать беспредельщиков без предупреждения.</p>
+</div>
+
+<div class="fee-box">
+<h4>💵 Вход</h4>
+<p>50 ₽ наличными</p>
 </div>
 
 <div class="rules-box">
@@ -1779,6 +2089,9 @@ BLC
 
 <label>Описание — на что собираем</label>
 <textarea id="savingDesc" rows="3" placeholder="На что собираем деньги..."></textarea>
+
+<label>Цель сбора (₽)</label>
+<input type="text" id="savingGoal" placeholder="Например: 5000">
 
 <label>Номер карты для перевода</label>
 <input type="text" id="savingCard" placeholder="0000 0000 0000 0000">
@@ -1987,6 +2300,18 @@ el.classList.toggle('show', isAdmin);
 
 });
 
+document.querySelectorAll('.add-member-btn').forEach(el=>{
+
+el.classList.toggle('show', isAdmin);
+
+});
+
+document.querySelectorAll('.member-remove').forEach(el=>{
+
+el.classList.toggle('show', isAdmin);
+
+});
+
 }
 
 /* ---------- NEWS (Firestore, видно всем в реальном времени) ---------- */
@@ -2137,9 +2462,107 @@ const div = document.createElement('div');
 
 div.className = 'rank custom-rank rank-4';
 
-div.innerHTML = `<div class="rank-icon">${escapeHtml(r.icon)}</div><div class="rank-info"><h4>${escapeHtml(r.title)}</h4><p>${escapeHtml(r.desc)}</p></div><button class="remove-x" onclick="deleteRank('${doc.id}')">✕</button>`;
+const titleEscaped = escapeHtml(r.title).replace(/'/g,"\\'");
+
+div.innerHTML = `<div class="rank-top"><div class="rank-icon">${escapeHtml(r.icon)}</div><div class="rank-info"><h4>${escapeHtml(r.title)}</h4><p>${escapeHtml(r.desc)}</p></div><button class="remove-x" onclick="deleteRank('${doc.id}')">✕</button></div><div class="rank-members" id="members-${doc.id}"></div><button class="add-member-btn" onclick="openMemberForm('${doc.id}','${titleEscaped}')">+ Добавить человека</button>`;
 
 list.appendChild(div);
+
+});
+
+updateAdminUI();
+
+renderMembersFromDocs(lastMembersDocs);
+
+}
+
+/* ---------- MEMBERS (люди внутри каждой роли) ---------- */
+
+let currentMemberRankKey = null;
+
+let lastMembersDocs = [];
+
+function openMemberForm(rankKey, rankTitle){
+
+currentMemberRankKey = rankKey;
+
+document.getElementById('memberRankLabel').textContent = 'Роль: ' + rankTitle;
+
+document.getElementById('memberName').value = '';
+
+document.getElementById('memberOverlay').classList.add('open');
+
+}
+
+function closeMemberForm(){
+
+document.getElementById('memberOverlay').classList.remove('open');
+
+}
+
+function submitMember(){
+
+const name = document.getElementById('memberName').value.trim();
+
+if(!name || !currentMemberRankKey) return;
+
+db.collection('members').add({
+
+rankKey: currentMemberRankKey,
+
+name: name,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).then(()=>{
+
+closeMemberForm();
+
+}).catch(err=>{
+
+alert('Не удалось добавить участника: ' + err.message);
+
+});
+
+}
+
+function deleteMember(id){
+
+db.collection('members').doc(id).delete();
+
+}
+
+function renderMembersFromDocs(docs){
+
+lastMembersDocs = docs;
+
+const grouped = {};
+
+docs.forEach(doc=>{
+
+const m = doc.data();
+
+if(!grouped[m.rankKey]) grouped[m.rankKey] = [];
+
+grouped[m.rankKey].push({id: doc.id, name: m.name});
+
+});
+
+document.querySelectorAll('[id^="members-"]').forEach(el=>{
+
+const key = el.id.replace('members-','');
+
+const items = grouped[key] || [];
+
+if(items.length === 0){
+
+el.innerHTML = '<span class="member-empty">Пока никого нет</span>';
+
+}else{
+
+el.innerHTML = items.map(m=>`<span class="member-pill">${escapeHtml(m.name)} <button class="member-remove" onclick="deleteMember('${m.id}')">✕</button></span>`).join('');
+
+}
 
 });
 
@@ -2163,6 +2586,8 @@ document.getElementById('savingTitle').value = '';
 
 document.getElementById('savingDesc').value = '';
 
+document.getElementById('savingGoal').value = '';
+
 document.getElementById('savingCard').value = '';
 
 }
@@ -2173,15 +2598,19 @@ const title = document.getElementById('savingTitle').value.trim();
 
 const desc = document.getElementById('savingDesc').value.trim();
 
+const goal = parseFloat(document.getElementById('savingGoal').value.trim().replace(',','.')) || 0;
+
 const card = document.getElementById('savingCard').value.trim();
 
-if(!title || !desc || !card) return;
+if(!title || !desc || !card || !goal) return;
 
 db.collection('savings').add({
 
 title: title,
 
 desc: desc,
+
+goal: goal,
 
 card: card,
 
@@ -2203,7 +2632,19 @@ function deleteSaving(id){
 
 db.collection('savings').doc(id).delete();
 
+if(donationListeners[id]){
+
+donationListeners[id]();
+
+delete donationListeners[id];
+
 }
+
+}
+
+// храним активные подписки на пожертвования по каждому сбору, чтобы не плодить дубликаты
+
+const donationListeners = {};
 
 function renderSavingsFromDocs(docs){
 
@@ -2223,9 +2664,13 @@ docs.forEach(doc=>{
 
 const s = doc.data();
 
+const goal = s.goal || 0;
+
 const div = document.createElement('div');
 
 div.className = 'saving-card';
+
+div.id = 'saving-' + doc.id;
 
 div.innerHTML = `
 
@@ -2239,15 +2684,75 @@ div.innerHTML = `
 
 <p>${escapeHtml(s.desc)}</p>
 
+<div class="progress-wrap">
+
+<div class="progress-track">
+
+<div class="progress-fill" id="progress-${doc.id}" style="width:0%;"></div>
+
+</div>
+
+<div class="progress-label">
+
+<span class="collected" id="collected-${doc.id}">0 ₽</span>
+
+<span>из ${goal.toLocaleString('ru-RU')} ₽</span>
+
+</div>
+
+</div>
+
 <button class="chip-in-btn" onclick="openDonate('${doc.id}','${escapeHtml(s.title).replace(/'/g,"\\'")}','${escapeHtml(s.card).replace(/'/g,"\\'")}')">Скинуться</button>
 
 `;
 
 list.appendChild(div);
 
+subscribeToDonations(doc.id, goal);
+
 });
 
 updateAdminUI();
+
+}
+
+function subscribeToDonations(savingId, goal){
+
+if(donationListeners[savingId]) return; // уже подписаны
+
+const unsubscribe = db.collection('donations').where('savingId','==',savingId).onSnapshot(snapshot=>{
+
+let total = 0;
+
+snapshot.forEach(d=>{
+
+const amt = parseFloat(String(d.data().amount).replace(',','.'));
+
+if(!isNaN(amt)) total += amt;
+
+});
+
+const fillEl = document.getElementById('progress-' + savingId);
+
+const collectedEl = document.getElementById('collected-' + savingId);
+
+if(fillEl && collectedEl){
+
+const pct = goal > 0 ? Math.min(100, (total/goal)*100) : 0;
+
+fillEl.style.width = pct + '%';
+
+collectedEl.textContent = total.toLocaleString('ru-RU') + ' ₽';
+
+}
+
+}, err=>{
+
+console.error('Firestore donations error:', err);
+
+});
+
+donationListeners[savingId] = unsubscribe;
 
 }
 
@@ -2648,6 +3153,18 @@ renderRanksFromDocs(snapshot.docs);
 }, err=>{
 
 console.error('Firestore ranks error:', err);
+
+});
+
+// живая синхронизация участников ролей для ВСЕХ посетителей
+
+db.collection('members').orderBy('createdAt','asc').onSnapshot(snapshot=>{
+
+renderMembersFromDocs(snapshot.docs);
+
+}, err=>{
+
+console.error('Firestore members error:', err);
 
 });
 
