@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Brich Liberty Clan</title>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,Arial,sans-serif;
+}
+
+body{
+
+background:
+linear-gradient(135deg,#050505,#081522,#050505);
+
+color:white;
+
+min-height:100vh;
+
+overflow-x:hidden;
+
+}
+
+/* ================= HEADER ================= */
+
+header{
+
+width:100%;
+height:90px;
+
+background:rgba(10,10,10,.75);
+
+backdrop-filter:blur(12px);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:0 40px;
+
+border-bottom:1px solid rgba(0,255,255,.15);
+
+position:sticky;
+
+top:0;
+
+z-index:100;
+
+}
+
+/* ================= LOGO ================= */
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+}
+
+.shield{
+
+width:60px;
+
+height:70px;
+
+background:linear-gradient(#0ff,#0057ff);
+
+clip-path:polygon(50% 0%,100% 20%,100% 65%,50% 100%,0% 65%,0% 20%);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:22px;
+
+font-weight:bold;
+
+color:white;
+
+box-shadow:0 0 30px cyan;
+
+}
+
+.logo h1{
+
+font-size:30px;
+
+letter-spacing:2px;
+
+text-shadow:
+
+0 0 10px cyan,
+
+0 0 25px cyan;
+
+}
+
+/* ================= MENU ================= */
+
+nav{
+
+display:flex;
+
+gap:18px;
+
+}
+
+nav button{
+
+background:transparent;
+
+border:1px solid cyan;
+
+color:white;
+
+padding:12px 22px;
+
+font-size:16px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+nav button:hover{
+
+background:cyan;
+
+color:black;
+
+box-shadow:0 0 25px cyan;
+
+}
+
+/* ================= HERO ================= */
+
+.hero{
+
+height:420px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+text-align:center;
+
+}
+
+.hero h2{
+
+font-size:58px;
+
+text-shadow:
+
+0 0 10px cyan,
+
+0 0 35px cyan;
+
+margin-bottom:15px;
+
+}
+
+.hero p{
+
+font-size:22px;
+
+color:#d0d0d0;
+
+margin-bottom:40px;
+
+}
+
+.join{
+
+padding:18px 45px;
+
+font-size:20px;
+
+border:none;
+
+border-radius:15px;
+
+cursor:pointer;
+
+background:cyan;
+
+color:black;
+
+font-weight:bold;
+
+transition:.3s;
+
+}
+
+.join:hover{
+
+transform:scale(1.08);
+
+box-shadow:0 0 35px cyan;
+
+}
+
+/* ================= CARDS ================= */
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+padding:40px;
+
+}
+
+.card{
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+border-radius:20px;
+
+padding:25px;
+
+margin-bottom:30px;
+
+box-shadow:0 0 20px rgba(0,255,255,.15);
+
+transition:.35s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:0 0 35px cyan;
+
+}
+
+.card h3{
+
+margin-bottom:15px;
+
+color:cyan;
+
+text-shadow:0 0 10px cyan;
+
+}
+
+footer{
+
+text-align:center;
+
+padding:35px;
+
+color:#888;
+
+}
+
+/* ================= HIERARCHY ================= */
+
+html{
+scroll-behavior:smooth;
+}
+
+.section-title{
+
+text-align:center;
+
+font-size:38px;
+
+margin-bottom:10px;
+
+text-shadow:0 0 10px cyan,0 0 25px cyan;
+
+}
+
+.section-sub{
+
+text-align:center;
+
+color:#aaa;
+
+margin-bottom:40px;
+
+font-size:16px;
+
+}
+
+.rank-list{
+
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
+
+}
+
+.rank{
+
+display:flex;
+
+align-items:center;
+
+gap:22px;
+
+background:rgba(255,255,255,.05);
+
+border:1px solid rgba(255,255,255,.08);
+
+backdrop-filter:blur(15px);
+
+border-radius:18px;
+
+padding:20px 28px;
+
+box-shadow:0 0 20px rgba(0,255,255,.1);
+
+transition:.3s;
+
+}
+
+.rank:hover{
+
+transform:translateX(10px);
+
+box-shadow:0 0 30px cyan;
+
+}
+
+.rank-icon{
+
+width:60px;
+
+height:60px;
+
+min-width:60px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:26px;
+
+font-weight:bold;
+
+color:black;
+
+}
+
+.rank-info h4{
+
+font-size:22px;
+
+margin-bottom:4px;
+
+}
+
+.rank-info p{
+
+color:#bbb;
+
+font-size:15px;
+
+}
+
+.rank-1 .rank-icon{background:linear-gradient(#ffd700,#b8860b);box-shadow:0 0 25px #ffd700;}
+.rank-1 h4{color:#ffd700;text-shadow:0 0 10px #ffd700;}
+
+.rank-2 .rank-icon{background:linear-gradient(#00e5ff,#0057ff);box-shadow:0 0 25px cyan;}
+.rank-2 h4{color:cyan;text-shadow:0 0 10px cyan;}
+
+.rank-3 .rank-icon{background:linear-gradient(#c084fc,#7e22ce);box-shadow:0 0 25px #c084fc;}
+.rank-3 h4{color:#c084fc;text-shadow:0 0 10px #c084fc;}
+
+.rank-4 .rank-icon{background:linear-gradient(#9ca3af,#4b5563);box-shadow:0 0 20px #9ca3af;}
+.rank-4 h4{color:#d1d5db;}
+
+.rank-5 .rank-icon{background:linear-gradient(#34d399,#047857);box-shadow:0 0 20px #34d399;}
+.rank-5 h4{color:#34d399;}
+
+.rank-6 .rank-icon{background:linear-gradient(#a8a29e,#57534e);box-shadow:0 0 15px #a8a29e;}
+.rank-6 h4{color:#d6d3d1;}
+
+/* ================= ADMIN LOGIN ================= */
+
+.admin-btn{
+
+background:transparent;
+
+border:1px solid gold;
+
+color:gold;
+
+padding:12px 20px;
+
+font-size:15px;
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:.3s;
+
+white-space:nowrap;
+
+}
+
+.admin-btn:hover{
+
+background:gold;
+
+color:black;
+
+box-shadow:0 0 25px gold;
+
+}
+
+.admin-btn.logged-in{
+
+background:gold;
+
+color:black;
+
+box-shadow:0 0 20px gold;
+
+}
+
+.header-right{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+}
+
+.overlay{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.7);
+
+backdrop-filter:blur(4px);
+
+z-index:200;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.overlay.open{
+
+display:flex;
+
+}
+
+.modal{
+
+background:#0a0f14;
+
+border:1px solid rgba(255,215,0,.4);
+
+border-radius:20px;
+
+padding:35px;
+
+width:100%;
+
+max-width:380px;
+
+box-shadow:0 0 40px rgba(255,215,0,.25);
+
+}
+
+.modal h3{
+
+color:gold;
+
+text-shadow:0 0 10px gold;
+
+margin-bottom:22px;
+
+text-align:center;
+
+font-size:22px;
+
+}
+
+.modal label{
+
+display:block;
+
+font-size:13px;
+
+color:#aaa;
+
+margin-bottom:6px;
+
+margin-top:14px;
+
+}
+
+.modal input,.modal textarea{
+
+width:100%;
+
+padding:12px 14px;
+
+border-radius:10px;
+
+border:1px solid rgba(255,255,255,.15);
+
+background:rgba(255,255,255,.05);
+
+color:white;
+
+font-size:15px;
+
+outline:none;
+
+}
+
+.modal input:focus,.modal textarea:focus{
+
+border-color:gold;
+
+box-shadow:0 0 12px rgba(255,215,0,.35);
+
+}
+
+.modal-error{
+
+color:#ff5c5c;
+
+font-size:13px;
+
+margin-top:10px;
+
+display:none;
+
+}
+
+.modal-buttons{
+
+display:flex;
+
+gap:12px;
+
+margin-top:24px;
+
+}
+
+.modal-buttons button{
+
+flex:1;
+
+padding:13px;
+
+border-radius:12px;
+
+border:none;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.btn-primary{
+
+background:gold;
+
+color:black;
+
+}
+
+.btn-primary:hover{
+
+box-shadow:0 0 25px gold;
+
+transform:scale(1.03);
+
+}
+
+.btn-secondary{
+
+background:transparent;
+
+border:1px solid #555 !important;
+
+color:#ccc;
+
+}
+
+.btn-secondary:hover{
+
+background:rgba(255,255,255,.08);
+
+}
+
+/* ================= ADMIN PANEL ================= */
+
+.admin-add-btn{
+
+display:none;
+
+margin:0 auto 30px;
+
+padding:13px 26px;
+
+border-radius:14px;
+
+border:1px dashed gold;
+
+background:rgba(255,215,0,.08);
+
+color:gold;
+
+font-size:15px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.admin-add-btn.show{
+
+display:block;
+
+}
+
+.admin-add-btn:hover{
+
+background:gold;
+
+color:black;
+
+box-shadow:0 0 20px gold;
+
+}
+
+.remove-x{
+
+display:none;
+
+margin-left:auto;
+
+background:transparent;
+
+border:1px solid #ff5c5c;
+
+color:#ff5c5c;
+
+width:32px;
+
+height:32px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+font-size:16px;
+
+}
+
+.remove-x.show{
+
+display:block;
+
+}
+
+/* ================= APPLICATION FORM ================= */
+
+.app-modal{
+
+background:#0a0f14;
+
+border:1px solid rgba(0,255,255,.35);
+
+border-radius:20px;
+
+padding:35px;
+
+width:100%;
+
+max-width:480px;
+
+max-height:88vh;
+
+overflow-y:auto;
+
+box-shadow:0 0 40px rgba(0,255,255,.2);
+
+}
+
+.app-modal h3{
+
+color:cyan;
+
+text-shadow:0 0 10px cyan;
+
+margin-bottom:22px;
+
+text-align:center;
+
+font-size:24px;
+
+}
+
+.app-modal label{
+
+display:block;
+
+font-size:13px;
+
+color:#aaa;
+
+margin-bottom:6px;
+
+margin-top:16px;
+
+}
+
+.app-modal input[type="text"]{
+
+width:100%;
+
+padding:12px 14px;
+
+border-radius:10px;
+
+border:1px solid rgba(255,255,255,.15);
+
+background:rgba(255,255,255,.05);
+
+color:white;
+
+font-size:15px;
+
+outline:none;
+
+}
+
+.app-modal input[type="text"]:focus{
+
+border-color:cyan;
+
+box-shadow:0 0 12px rgba(0,255,255,.35);
+
+}
+
+.radio-group{
+
+display:flex;
+
+gap:12px;
+
+margin-top:8px;
+
+}
+
+.radio-option{
+
+flex:1;
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+padding:12px 14px;
+
+border-radius:10px;
+
+border:1px solid rgba(255,255,255,.15);
+
+background:rgba(255,255,255,.05);
+
+cursor:pointer;
+
+transition:.25s;
+
+font-size:14px;
+
+}
+
+.radio-option:hover{
+
+border-color:cyan;
+
+}
+
+.radio-option.checked{
+
+border-color:cyan;
+
+background:rgba(0,255,255,.1);
+
+box-shadow:0 0 12px rgba(0,255,255,.25);
+
+}
+
+.radio-option input{
+
+accent-color:cyan;
+
+}
+
+.warning-box{
+
+margin-top:22px;
+
+padding:16px 18px;
+
+border-radius:14px;
+
+border:1px solid rgba(255,90,90,.4);
+
+background:rgba(255,90,90,.08);
+
+}
+
+.warning-box h4{
+
+color:#ff5c5c;
+
+font-size:15px;
+
+margin-bottom:8px;
+
+}
+
+.warning-box p{
+
+color:#ddb0b0;
+
+font-size:13.5px;
+
+line-height:1.5;
+
+}
+
+.rules-box{
+
+margin-top:18px;
+
+padding:16px 18px;
+
+border-radius:14px;
+
+border:1px solid rgba(255,255,255,.12);
+
+background:rgba(255,255,255,.04);
+
+}
+
+.rules-box h4{
+
+color:cyan;
+
+font-size:15px;
+
+margin-bottom:10px;
+
+}
+
+.rules-box ol{
+
+padding-left:20px;
+
+color:#ccc;
+
+font-size:13.5px;
+
+line-height:1.8;
+
+}
+
+.agree-row{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:10px;
+
+margin-top:20px;
+
+padding:12px 14px;
+
+border-radius:10px;
+
+background:rgba(255,255,255,.04);
+
+}
+
+.agree-row input{
+
+margin-top:3px;
+
+width:18px;
+
+height:18px;
+
+accent-color:cyan;
+
+cursor:pointer;
+
+}
+
+.agree-row label{
+
+margin:0;
+
+font-size:14px;
+
+color:#ddd;
+
+cursor:pointer;
+
+}
+
+.modal-buttons button:disabled{
+
+opacity:.4;
+
+cursor:not-allowed;
+
+}
+
+.modal-buttons button:disabled:hover{
+
+box-shadow:none;
+
+transform:none;
+
+}
+
+/* ================= SUCCESS SCREEN ================= */
+
+.success-modal{
+
+background:#0a0f14;
+
+border:1px solid rgba(0,255,255,.35);
+
+border-radius:20px;
+
+padding:45px 35px;
+
+width:100%;
+
+max-width:420px;
+
+text-align:center;
+
+box-shadow:0 0 40px rgba(0,255,255,.25);
+
+}
+
+.success-icon{
+
+font-size:56px;
+
+margin-bottom:18px;
+
+}
+
+.success-modal h3{
+
+color:cyan;
+
+text-shadow:0 0 10px cyan;
+
+font-size:24px;
+
+margin-bottom:16px;
+
+}
+
+.success-modal p{
+
+color:#ccc;
+
+font-size:15px;
+
+line-height:1.7;
+
+margin-bottom:10px;
+
+}
+
+.success-modal .sign{
+
+color:cyan;
+
+font-weight:bold;
+
+margin-top:18px;
+
+}
+
+.success-modal button{
+
+margin-top:26px;
+
+padding:13px 32px;
+
+border-radius:12px;
+
+border:none;
+
+background:cyan;
+
+color:black;
+
+font-weight:bold;
+
+font-size:15px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.success-modal button:hover{
+
+box-shadow:0 0 25px cyan;
+
+transform:scale(1.04);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+<div class="shield">
+BLC
+</div>
+
+<h1>BRICH LIBERTY CLAN</h1>
+
+</div>
+
+<div class="header-right">
+
+<nav>
+
+<button onclick="document.getElementById('hero').scrollIntoView()">Главная</button>
+
+<button onclick="document.getElementById('profile').scrollIntoView()">Профиль</button>
+
+<button onclick="document.getElementById('news').scrollIntoView()">Новости</button>
+
+<button onclick="document.getElementById('hierarchy').scrollIntoView()">Иерархия</button>
+
+</nav>
+
+<button class="admin-btn" id="adminBtn" onclick="openLogin()">🔑 Войти как Гл. Админ</button>
+
+</div>
+
+</header>
+
+<section class="hero" id="hero">
+
+<h2>Добро пожаловать</h2>
+
+<p>
+Официальный сайт клана Brich Liberty Clan
+</p>
+
+<button class="join" onclick="openApplication()">
+ПОЛУЧИТЬ РАЗРЕШЕНИЕ НА ВХОД
+</button>
+
+</section>
+
+<div class="container" id="news">
+
+<div id="newsList">
+
+<div class="card">
+
+<h3>📰 Последняя новость</h3>
+
+<p>
+Добро пожаловать на официальный сайт Brich Liberty Clan.
+Здесь будут публиковаться все новости клана.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>🔥 Наши цели</h3>
+
+<p>
+Создать сильное и дружное сообщество игроков, проводить турниры и совместные мероприятия.
+</p>
+
+</div>
+
+</div>
+
+<button class="admin-add-btn" id="addNewsBtn" onclick="openNewsForm()">+ Добавить новость</button>
+
+<div class="card" id="profile">
+
+<h3>👤 Профиль</h3>
+
+<p>
+Раздел профиля в разработке. Скоро здесь появится личный кабинет участника клана.
+</p>
+
+</div>
+
+</div>
+
+<div class="container" id="hierarchy">
+
+<h2 class="section-title">Иерархия клана</h2>
+
+<p class="section-sub">Структура ролей и обязанностей Brich Liberty Clan</p>
+
+<div class="rank-list" id="rankList">
+
+<div class="rank rank-1">
+<div class="rank-icon">👑</div>
+<div class="rank-info">
+<h4>Главный админ</h4>
+<p>Высшее руководство клана. Принимает ключевые решения, назначает админов.</p>
+</div>
+</div>
+
+<div class="rank rank-2">
+<div class="rank-icon">⭐</div>
+<div class="rank-info">
+<h4>Админ</h4>
+<p>Управление кланом, модерация, организация мероприятий и турниров.</p>
+</div>
+</div>
+
+<div class="rank rank-3">
+<div class="rank-icon">💎</div>
+<div class="rank-info">
+<h4>VIP участник</h4>
+<p>Привилегированный статус за особый вклад или активность в клане.</p>
+</div>
+</div>
+
+<div class="rank rank-4">
+<div class="rank-icon">🎮</div>
+<div class="rank-info">
+<h4>Участник</h4>
+<p>Полноправный член клана, участвует в жизни сообщества.</p>
+</div>
+</div>
+
+<div class="rank rank-5">
+<div class="rank-icon">🛡️</div>
+<div class="rank-info">
+<h4>Охранник</h4>
+<p>Следит за порядком, безопасностью и соблюдением правил клана.</p>
+</div>
+</div>
+
+<div class="rank rank-6">
+<div class="rank-icon">🧹</div>
+<div class="rank-info">
+<h4>Уборщик</h4>
+<p>Поддерживает чистоту и порядок на ресурсах клана.</p>
+</div>
+</div>
+
+</div>
+
+<button class="admin-add-btn" id="addRankBtn" onclick="openRankForm()">+ Добавить роль в иерархию</button>
+
+</div>
+
+<footer>
+
+© 2026 Brich Liberty Clan
+
+</footer>
+
+<!-- ================= LOGIN MODAL ================= -->
+
+<div class="overlay" id="loginOverlay">
+
+<div class="modal">
+
+<h3>🔑 Вход для Гл. Админа</h3>
+
+<label>Имя</label>
+<input type="text" id="loginName" placeholder="Ваше имя">
+
+<label>Фамилия</label>
+<input type="text" id="loginSurname" placeholder="Ваша фамилия">
+
+<label>Пароль</label>
+<input type="password" id="loginPassword" placeholder="Пароль">
+
+<p class="modal-error" id="loginError">Неверный пароль. Попробуйте снова.</p>
+
+<div class="modal-buttons">
+<button class="btn-secondary" onclick="closeLogin()">Отмена</button>
+<button class="btn-primary" onclick="submitLogin()">Далее</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= NEWS MODAL ================= -->
+
+<div class="overlay" id="newsOverlay">
+
+<div class="modal">
+
+<h3>📰 Новая новость</h3>
+
+<label>Заголовок</label>
+<input type="text" id="newsTitle" placeholder="Например: Турнир в эту субботу">
+
+<label>Текст новости</label>
+<textarea id="newsText" rows="4" placeholder="Текст новости..."></textarea>
+
+<div class="modal-buttons">
+<button class="btn-secondary" onclick="closeNewsForm()">Отмена</button>
+<button class="btn-primary" onclick="submitNews()">Опубликовать</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= RANK MODAL ================= -->
+
+<div class="overlay" id="rankOverlay">
+
+<div class="modal">
+
+<h3>🛡️ Новая роль</h3>
+
+<label>Иконка (эмодзи)</label>
+<input type="text" id="rankIcon" placeholder="Например: 🎖️">
+
+<label>Название роли</label>
+<input type="text" id="rankTitle" placeholder="Например: Модератор">
+
+<label>Описание</label>
+<textarea id="rankDesc" rows="3" placeholder="Обязанности роли..."></textarea>
+
+<div class="modal-buttons">
+<button class="btn-secondary" onclick="closeRankForm()">Отмена</button>
+<button class="btn-primary" onclick="submitRank()">Добавить</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= APPLICATION FORM ================= -->
+
+<div class="overlay" id="applicationOverlay">
+
+<div class="app-modal">
+
+<h3>🚪 Получить разрешение на вход</h3>
+
+<label>Имя</label>
+<input type="text" id="appName" placeholder="Ваше имя" oninput="validateApplication()">
+
+<label>Фамилия</label>
+<input type="text" id="appSurname" placeholder="Ваша фамилия" oninput="validateApplication()">
+
+<label>Вы пришли один или с компанией?</label>
+
+<div class="radio-group">
+
+<label class="radio-option" id="optAlone">
+<input type="radio" name="appCompany" value="Один" onchange="onCompanyChange()">
+Я один
+</label>
+
+<label class="radio-option" id="optGroup">
+<input type="radio" name="appCompany" value="С компанией" onchange="onCompanyChange()">
+С компанией
+</label>
+
+</div>
+
+<div class="warning-box">
+<h4>⚠️ Предупреждение</h4>
+<p>Если на территории будет твориться беспорядок, мы оставляем за собой право выгнать беспредельщиков без предупреждения.</p>
+</div>
+
+<div class="rules-box">
+<h4>📋 Правила</h4>
+<ol>
+<li>Не рисовать граффити</li>
+<li>Не мусорить</li>
+<li>Не портить имущество</li>
+</ol>
+</div>
+
+<div class="agree-row">
+<input type="checkbox" id="appAgree" onchange="validateApplication()">
+<label for="appAgree">Я согласен соблюдать правила клана</label>
+</div>
+
+<div class="modal-buttons">
+<button class="btn-secondary" onclick="closeApplication()">Отмена</button>
+<button class="btn-primary" id="appSubmitBtn" disabled onclick="submitApplication()">Далее</button>
+</div>
+
+</div>
+
+</div>
+
+<!-- ================= APPLICATION SUCCESS ================= -->
+
+<div class="overlay" id="appSuccessOverlay">
+
+<div class="success-modal">
+
+<div class="success-icon">✅</div>
+
+<h3>Ваша заявка одобрена</h3>
+
+<p>Мы можем скоро к вам прийти.</p>
+
+<p>Приятного отдыха!</p>
+
+<p class="sign">С уважением, Brich Liberty Clan</p>
+
+<button onclick="closeAppSuccess()">В меню</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* =====================================================================
+   НАСТРОЙКА FIREBASE — ВСТАВЬТЕ СЮДА СВОЙ КОНФИГ ИЗ FIREBASE CONSOLE
+   (Project settings → General → Your apps → SDK setup and configuration)
+   ===================================================================== */
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyCiLY6NcgHjRl7cWObLBQNsw05qdDg7QRM",
+
+  authDomain: "domyxa-c1f20.firebaseapp.com",
+
+  projectId: "domyxa-c1f20",
+
+  storageBucket: "domyxa-c1f20.firebasestorage.app",
+
+  messagingSenderId: "632395037598",
+
+  appId: "1:632395037598:web:114a83983c373bf3f6748f"
+
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+/* =====================================================================
+   НАСТРОЙКА EMAILJS — ВСТАВЬТЕ СЮДА СВОИ ДАННЫЕ ИЗ emailjs.com
+   (Account → General → Public Key; Email Services → Service ID;
+    Email Templates → Template ID)
+   ===================================================================== */
+
+const EMAILJS_PUBLIC_KEY = "k5KPoHH3hI1TKuCYl";
+
+const EMAILJS_SERVICE_ID = "service_7xkbnel";
+
+const EMAILJS_TEMPLATE_ID = "template_mqofk2i";
+
+// Email-адрес админа, которому должны приходить заявки
+
+const ADMIN_EMAILS = ["klimignatov494@gmail.com"];
+
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+const ADMIN_PASSWORD = "qwertR001";
+
+let isAdmin = false;
+
+let adminName = "";
+
+/* ---------- LOGIN (сессия остаётся локальной — это нормально) ---------- */
+
+function openLogin(){
+
+if(isAdmin){
+logout();
+return;
+}
+
+document.getElementById('loginOverlay').classList.add('open');
+
+}
+
+function closeLogin(){
+
+document.getElementById('loginOverlay').classList.remove('open');
+
+document.getElementById('loginError').style.display = 'none';
+
+document.getElementById('loginPassword').value = '';
+
+}
+
+function submitLogin(){
+
+const name = document.getElementById('loginName').value.trim();
+
+const surname = document.getElementById('loginSurname').value.trim();
+
+const password = document.getElementById('loginPassword').value;
+
+if(!name || !surname){
+
+document.getElementById('loginError').textContent = 'Введите имя и фамилию.';
+
+document.getElementById('loginError').style.display = 'block';
+
+return;
+
+}
+
+if(password === ADMIN_PASSWORD){
+
+isAdmin = true;
+
+adminName = name + ' ' + surname;
+
+sessionStorage.setItem('blc_admin_session', adminName);
+
+closeLogin();
+
+updateAdminUI();
+
+}else{
+
+document.getElementById('loginError').textContent = 'Неверный пароль. Попробуйте снова.';
+
+document.getElementById('loginError').style.display = 'block';
+
+}
+
+}
+
+function logout(){
+
+isAdmin = false;
+
+adminName = "";
+
+sessionStorage.removeItem('blc_admin_session');
+
+updateAdminUI();
+
+}
+
+function updateAdminUI(){
+
+const btn = document.getElementById('adminBtn');
+
+if(isAdmin){
+
+btn.textContent = '👑 ' + adminName + ' (выйти)';
+
+btn.classList.add('logged-in');
+
+document.getElementById('addNewsBtn').classList.add('show');
+
+document.getElementById('addRankBtn').classList.add('show');
+
+}else{
+
+btn.textContent = '🔑 Войти как Гл. Админ';
+
+btn.classList.remove('logged-in');
+
+document.getElementById('addNewsBtn').classList.remove('show');
+
+document.getElementById('addRankBtn').classList.remove('show');
+
+}
+
+document.querySelectorAll('.remove-x').forEach(el=>{
+
+el.classList.toggle('show', isAdmin);
+
+});
+
+}
+
+/* ---------- NEWS (Firestore, видно всем в реальном времени) ---------- */
+
+function openNewsForm(){
+
+document.getElementById('newsOverlay').classList.add('open');
+
+}
+
+function closeNewsForm(){
+
+document.getElementById('newsOverlay').classList.remove('open');
+
+document.getElementById('newsTitle').value = '';
+
+document.getElementById('newsText').value = '';
+
+}
+
+function submitNews(){
+
+const title = document.getElementById('newsTitle').value.trim();
+
+const text = document.getElementById('newsText').value.trim();
+
+if(!title || !text) return;
+
+db.collection('news').add({
+
+title: title,
+
+text: text,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).then(()=>{
+
+closeNewsForm();
+
+}).catch(err=>{
+
+alert('Не удалось сохранить новость: ' + err.message);
+
+});
+
+}
+
+function deleteNews(id){
+
+db.collection('news').doc(id).delete();
+
+}
+
+function renderNewsFromDocs(docs){
+
+const list = document.getElementById('newsList');
+
+document.querySelectorAll('.card.custom-news').forEach(el=>el.remove());
+
+docs.forEach(doc=>{
+
+const n = doc.data();
+
+const card = document.createElement('div');
+
+card.className = 'card custom-news';
+
+card.innerHTML = `<h3 style="display:flex;justify-content:space-between;align-items:center;">📰 ${escapeHtml(n.title)} <button class="remove-x" onclick="deleteNews('${doc.id}')">✕</button></h3><p>${escapeHtml(n.text)}</p>`;
+
+list.appendChild(card);
+
+});
+
+updateAdminUI();
+
+}
+
+/* ---------- RANKS (Firestore, видно всем в реальном времени) ---------- */
+
+function openRankForm(){
+
+document.getElementById('rankOverlay').classList.add('open');
+
+}
+
+function closeRankForm(){
+
+document.getElementById('rankOverlay').classList.remove('open');
+
+document.getElementById('rankIcon').value = '';
+
+document.getElementById('rankTitle').value = '';
+
+document.getElementById('rankDesc').value = '';
+
+}
+
+function submitRank(){
+
+const icon = document.getElementById('rankIcon').value.trim() || '🎖️';
+
+const title = document.getElementById('rankTitle').value.trim();
+
+const desc = document.getElementById('rankDesc').value.trim();
+
+if(!title || !desc) return;
+
+db.collection('ranks').add({
+
+icon: icon,
+
+title: title,
+
+desc: desc,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).then(()=>{
+
+closeRankForm();
+
+}).catch(err=>{
+
+alert('Не удалось сохранить роль: ' + err.message);
+
+});
+
+}
+
+function deleteRank(id){
+
+db.collection('ranks').doc(id).delete();
+
+}
+
+function renderRanksFromDocs(docs){
+
+const list = document.getElementById('rankList');
+
+document.querySelectorAll('.rank.custom-rank').forEach(el=>el.remove());
+
+docs.forEach(doc=>{
+
+const r = doc.data();
+
+const div = document.createElement('div');
+
+div.className = 'rank custom-rank rank-4';
+
+div.innerHTML = `<div class="rank-icon">${escapeHtml(r.icon)}</div><div class="rank-info"><h4>${escapeHtml(r.title)}</h4><p>${escapeHtml(r.desc)}</p></div><button class="remove-x" onclick="deleteRank('${doc.id}')">✕</button>`;
+
+list.appendChild(div);
+
+});
+
+updateAdminUI();
+
+}
+
+/* ---------- APPLICATION FORM ---------- */
+
+function openApplication(){
+
+document.getElementById('applicationOverlay').classList.add('open');
+
+}
+
+function closeApplication(){
+
+document.getElementById('applicationOverlay').classList.remove('open');
+
+resetApplicationForm();
+
+}
+
+function resetApplicationForm(){
+
+document.getElementById('appName').value = '';
+
+document.getElementById('appSurname').value = '';
+
+document.querySelectorAll('input[name="appCompany"]').forEach(r=>r.checked=false);
+
+document.getElementById('optAlone').classList.remove('checked');
+
+document.getElementById('optGroup').classList.remove('checked');
+
+document.getElementById('appAgree').checked = false;
+
+validateApplication();
+
+}
+
+function onCompanyChange(){
+
+const alone = document.querySelector('input[name="appCompany"][value="Один"]');
+
+document.getElementById('optAlone').classList.toggle('checked', alone.checked);
+
+document.getElementById('optGroup').classList.toggle('checked', !alone.checked);
+
+validateApplication();
+
+}
+
+function validateApplication(){
+
+const name = document.getElementById('appName').value.trim();
+
+const surname = document.getElementById('appSurname').value.trim();
+
+const companyChosen = document.querySelector('input[name="appCompany"]:checked');
+
+const agreed = document.getElementById('appAgree').checked;
+
+const valid = name && surname && companyChosen && agreed;
+
+document.getElementById('appSubmitBtn').disabled = !valid;
+
+}
+
+function submitApplication(){
+
+const name = document.getElementById('appName').value.trim();
+
+const surname = document.getElementById('appSurname').value.trim();
+
+const company = document.querySelector('input[name="appCompany"]:checked').value;
+
+if(!name || !surname || !company) return;
+
+if(typeof emailjs === 'undefined'){
+
+alert('ОШИБКА: библиотека EmailJS не загрузилась. Возможно, её блокирует блокировщик рекламы/расширение в браузере, либо нет интернета.');
+
+return;
+
+}
+
+const submitBtn = document.getElementById('appSubmitBtn');
+
+submitBtn.disabled = true;
+
+submitBtn.textContent = 'Отправка...';
+
+// сохраняем заявку в Firestore, чтобы админы видели историю заявок
+
+db.collection('applications').add({
+
+name: name,
+
+surname: surname,
+
+company: company,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).catch(err=>{
+
+alert('ОШИБКА Firestore: ' + err.message);
+
+});
+
+// отправляем письма админам
+
+const messageText = `Новая заявка на вступление в Brich Liberty Clan\n\nИмя: ${name}\nФамилия: ${surname}\nПришёл: ${company}`;
+
+const emailPromises = ADMIN_EMAILS.map(email=>
+
+emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+
+to_email: email,
+
+applicant_name: name,
+
+applicant_surname: surname,
+
+applicant_company: company,
+
+message: messageText
+
+}).then(res=>{
+
+alert('EmailJS: письмо успешно отправлено на ' + email);
+
+}).catch(err=>{
+
+alert('ОШИБКА EmailJS для ' + email + ':\n' + JSON.stringify(err));
+
+})
+
+);
+
+Promise.all(emailPromises).finally(()=>{
+
+submitBtn.disabled = false;
+
+submitBtn.textContent = 'Далее';
+
+document.getElementById('applicationOverlay').classList.remove('open');
+
+document.getElementById('appSuccessOverlay').classList.add('open');
+
+resetApplicationForm();
+
+});
+
+}
+
+function closeAppSuccess(){
+
+document.getElementById('appSuccessOverlay').classList.remove('open');
+
+document.getElementById('hero').scrollIntoView();
+
+}
+
+/* ---------- UTIL ---------- */
+
+function escapeHtml(str){
+
+const div = document.createElement('div');
+
+div.textContent = str;
+
+return div.innerHTML;
+
+}
+
+/* ---------- INIT ---------- */
+
+window.addEventListener('DOMContentLoaded', ()=>{
+
+const savedSession = sessionStorage.getItem('blc_admin_session');
+
+if(savedSession){
+
+isAdmin = true;
+
+adminName = savedSession;
+
+}
+
+updateAdminUI();
+
+// живая синхронизация новостей для ВСЕХ посетителей
+
+db.collection('news').orderBy('createdAt','asc').onSnapshot(snapshot=>{
+
+renderNewsFromDocs(snapshot.docs);
+
+}, err=>{
+
+console.error('Firestore news error:', err);
+
+});
+
+// живая синхронизация иерархии для ВСЕХ посетителей
+
+db.collection('ranks').orderBy('createdAt','asc').onSnapshot(snapshot=>{
+
+renderRanksFromDocs(snapshot.docs);
+
+}, err=>{
+
+console.error('Firestore ranks error:', err);
+
+});
+
+});
+
+document.querySelectorAll('.overlay').forEach(ov=>{
+
+ov.addEventListener('click', (e)=>{
+
+if(e.target === ov) ov.classList.remove('open');
+
+});
+
+});
+
+</script>
+
+
+
+</body>
+</html>
