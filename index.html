@@ -1416,6 +1416,212 @@ box-shadow:0 0 20px #00ff88;
 
 }
 
+/* ================= NEWS TYPE TABS ================= */
+
+.news-type-tabs{
+display:flex;
+gap:8px;
+margin-bottom:6px;
+}
+
+.news-type-tab{
+flex:1;
+padding:10px 8px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,.15);
+background:rgba(255,255,255,.05);
+color:#ccc;
+font-size:13px;
+cursor:pointer;
+transition:.25s;
+text-align:center;
+}
+
+.news-type-tab:hover{
+border-color:gold;
+}
+
+.news-type-tab.active{
+border-color:gold;
+background:rgba(255,215,0,.12);
+color:gold;
+box-shadow:0 0 12px rgba(255,215,0,.25);
+}
+
+.news-type-panel{
+display:none;
+}
+
+.news-type-panel.active{
+display:block;
+}
+
+.poll-option-row{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:8px;
+}
+
+.poll-option-row input[type="text"]{
+flex:1;
+padding:10px 12px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,.15);
+background:rgba(255,255,255,.05);
+color:white;
+font-size:14px;
+outline:none;
+}
+
+.poll-option-row input[type="text"]:focus{
+border-color:gold;
+box-shadow:0 0 10px rgba(255,215,0,.3);
+}
+
+.poll-option-remove{
+background:transparent;
+border:1px solid #ff5c5c;
+color:#ff5c5c;
+width:34px;
+height:34px;
+min-width:34px;
+border-radius:8px;
+cursor:pointer;
+font-size:15px;
+}
+
+.poll-option-add{
+margin-top:12px;
+width:100%;
+padding:10px;
+border-radius:10px;
+border:1px dashed cyan;
+background:rgba(0,255,255,.06);
+color:cyan;
+font-size:13px;
+cursor:pointer;
+transition:.25s;
+}
+
+.poll-option-add:hover{
+background:cyan;
+color:black;
+}
+
+.quiz-correct-radio{
+accent-color:#00ff88;
+width:18px;
+height:18px;
+cursor:pointer;
+flex-shrink:0;
+}
+
+/* ================= POLL / QUIZ CARDS ================= */
+
+.poll-badge,.quiz-badge{
+display:inline-block;
+font-size:11px;
+font-weight:bold;
+padding:3px 10px;
+border-radius:20px;
+margin-left:8px;
+vertical-align:middle;
+}
+
+.poll-badge{
+background:rgba(0,255,255,.12);
+color:cyan;
+border:1px solid rgba(0,255,255,.4);
+}
+
+.quiz-badge{
+background:rgba(192,132,252,.15);
+color:#c084fc;
+border:1px solid rgba(192,132,252,.4);
+}
+
+.poll-option-bar{
+position:relative;
+width:100%;
+padding:12px 14px;
+margin-top:10px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.04);
+cursor:pointer;
+overflow:hidden;
+transition:.25s;
+}
+
+.poll-option-bar:hover{
+border-color:cyan;
+}
+
+.poll-option-bar.voted{
+cursor:default;
+}
+
+.poll-option-bar .fill-bg{
+position:absolute;
+top:0;
+left:0;
+height:100%;
+background:linear-gradient(90deg,rgba(0,204,255,.28),rgba(0,255,255,.28));
+z-index:0;
+transition:width .6s ease;
+}
+
+.poll-option-bar.correct .fill-bg{
+background:linear-gradient(90deg,rgba(0,180,110,.35),rgba(0,255,136,.35));
+}
+
+.poll-option-bar.wrong .fill-bg{
+background:linear-gradient(90deg,rgba(200,40,40,.35),rgba(255,92,92,.35));
+}
+
+.poll-option-bar.correct{
+border-color:#00ff88;
+}
+
+.poll-option-bar.wrong{
+border-color:#ff5c5c;
+}
+
+.poll-option-content{
+position:relative;
+z-index:1;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+font-size:14.5px;
+color:#eee;
+}
+
+.poll-option-pct{
+font-size:13px;
+color:#9ca3af;
+font-weight:bold;
+white-space:nowrap;
+}
+
+.poll-meta{
+margin-top:12px;
+font-size:12.5px;
+color:#888;
+text-align:right;
+}
+
+.quiz-feedback{
+margin-top:10px;
+font-size:13.5px;
+font-weight:bold;
+}
+
+.quiz-feedback.ok{color:#00ff88;}
+.quiz-feedback.no{color:#ff5c5c;}
+
 .card-number-display{
 
 background:rgba(0,255,136,.08);
@@ -1751,9 +1957,9 @@ display:none;
 
 <div id="newsList">
 
-<div class="card">
+<div class="card" data-basekey="news-welcome">
 
-<h3>📰 Последняя новость</h3>
+<h3 style="display:flex;justify-content:space-between;align-items:center;">📰 Последняя новость <button class="remove-x" onclick="hideBaseItem('news-welcome')">✕</button></h3>
 
 <p>
 Добро пожаловать на официальный сайт Brich Liberty Clan.
@@ -1762,9 +1968,9 @@ display:none;
 
 </div>
 
-<div class="card">
+<div class="card" data-basekey="news-goals">
 
-<h3>🔥 Наши цели</h3>
+<h3 style="display:flex;justify-content:space-between;align-items:center;">🔥 Наши цели <button class="remove-x" onclick="hideBaseItem('news-goals')">✕</button></h3>
 
 <p>
 Создать сильное и дружное сообщество игроков, проводить турниры и совместные мероприятия.
@@ -1796,73 +2002,79 @@ display:none;
 
 <div class="rank-list" id="rankList">
 
-<div class="rank rank-1">
+<div class="rank rank-1" data-basekey="rank-glavniy">
 <div class="rank-top">
 <div class="rank-icon">👑</div>
 <div class="rank-info">
 <h4>Главный админ</h4>
 <p>Высшее руководство клана. Принимает ключевые решения, назначает админов.</p>
 </div>
+<button class="remove-x" onclick="hideBaseItem('rank-glavniy')">✕</button>
 </div>
 <div class="rank-members" id="members-glavniy"></div>
 <button class="add-member-btn" onclick="openMemberForm('glavniy','Главный админ')">+ Добавить человека</button>
 </div>
 
-<div class="rank rank-2">
+<div class="rank rank-2" data-basekey="rank-admin">
 <div class="rank-top">
 <div class="rank-icon">⭐</div>
 <div class="rank-info">
 <h4>Админ</h4>
 <p>Управление кланом, модерация, организация мероприятий и турниров.</p>
 </div>
+<button class="remove-x" onclick="hideBaseItem('rank-admin')">✕</button>
 </div>
 <div class="rank-members" id="members-admin"></div>
 <button class="add-member-btn" onclick="openMemberForm('admin','Админ')">+ Добавить человека</button>
 </div>
 
-<div class="rank rank-3">
+<div class="rank rank-3" data-basekey="rank-vip">
 <div class="rank-top">
 <div class="rank-icon">💎</div>
 <div class="rank-info">
 <h4>VIP участник</h4>
 <p>Привилегированный статус за особый вклад или активность в клане.</p>
 </div>
+<button class="remove-x" onclick="hideBaseItem('rank-vip')">✕</button>
 </div>
 <div class="rank-members" id="members-vip"></div>
 <button class="add-member-btn" onclick="openMemberForm('vip','VIP участник')">+ Добавить человека</button>
 </div>
 
-<div class="rank rank-4">
+<div class="rank rank-4" data-basekey="rank-uchastnik">
 <div class="rank-top">
 <div class="rank-icon">🎮</div>
 <div class="rank-info">
 <h4>Участник</h4>
 <p>Полноправный член клана, участвует в жизни сообщества.</p>
 </div>
+<button class="remove-x" onclick="hideBaseItem('rank-uchastnik')">✕</button>
 </div>
 <div class="rank-members" id="members-uchastnik"></div>
 <button class="add-member-btn" onclick="openMemberForm('uchastnik','Участник')">+ Добавить человека</button>
 </div>
 
-<div class="rank rank-5">
+<div class="rank rank-5" data-basekey="rank-ohrannik">
 <div class="rank-top">
 <div class="rank-icon">🛡️</div>
 <div class="rank-info">
 <h4>Охранник</h4>
 <p>Следит за порядком, безопасностью и соблюдением правил клана.</p>
 </div>
+<button class="remove-x" onclick="hideBaseItem('rank-ohrannik')">✕</button>
 </div>
 <div class="rank-members" id="members-ohrannik"></div>
 <button class="add-member-btn" onclick="openMemberForm('ohrannik','Охранник')">+ Добавить человека</button>
 </div>
 
-<div class="rank rank-6">
+<div class="rank rank-6" data-basekey="rank-uborshik">
 <div class="rank-top">
 <div class="rank-icon">🧹</div>
 <div class="rank-info">
 <h4>Уборщик</h4>
 <p>Поддерживает чистоту и порядок на ресурсах клана.</p>
 </div>
+<button class="remove-x" onclick="hideBaseItem('rank-uborshik')">✕</button>
 </div>
 <div class="rank-members" id="members-uborshik"></div>
 <button class="add-member-btn" onclick="openMemberForm('uborshik','Уборщик')">+ Добавить человека</button>
@@ -1924,9 +2136,18 @@ display:none;
 
 <div class="overlay" id="newsOverlay">
 
-<div class="modal">
+<div class="modal" style="max-width:460px;">
 
-<h3>📰 Новая новость</h3>
+<h3>📰 Новая публикация</h3>
+
+<div class="news-type-tabs">
+<button type="button" class="news-type-tab active" id="tabBtn-news" onclick="selectNewsType('news')">📰 Новость</button>
+<button type="button" class="news-type-tab" id="tabBtn-poll" onclick="selectNewsType('poll')">📊 Опрос</button>
+<button type="button" class="news-type-tab" id="tabBtn-quiz" onclick="selectNewsType('quiz')">🧠 Викторина</button>
+</div>
+
+<!-- NEWS PANEL -->
+<div class="news-type-panel active" id="panel-news">
 
 <label>Заголовок</label>
 <input type="text" id="newsTitle" placeholder="Например: Турнир в эту субботу">
@@ -1934,9 +2155,39 @@ display:none;
 <label>Текст новости</label>
 <textarea id="newsText" rows="4" placeholder="Текст новости..."></textarea>
 
+</div>
+
+<!-- POLL PANEL -->
+<div class="news-type-panel" id="panel-poll">
+
+<label>Вопрос опроса</label>
+<input type="text" id="pollQuestion" placeholder="Например: Когда проведём турнир?">
+
+<label>Варианты ответа</label>
+<div id="pollOptionsList"></div>
+
+<button type="button" class="poll-option-add" onclick="addOptionRow('pollOptionsList')">+ Добавить вариант</button>
+
+</div>
+
+<!-- QUIZ PANEL -->
+<div class="news-type-panel" id="panel-quiz">
+
+<label>Вопрос викторины</label>
+<input type="text" id="quizQuestion" placeholder="Например: Сколько игроков в клане?">
+
+<label>Варианты ответа (отметьте правильный)</label>
+<div id="quizOptionsList"></div>
+
+<button type="button" class="poll-option-add" onclick="addOptionRow('quizOptionsList', true)">+ Добавить вариант</button>
+
+</div>
+
+<p class="modal-error" id="newsFormError">Заполните все поля корректно.</p>
+
 <div class="modal-buttons">
 <button class="btn-secondary" onclick="closeNewsForm()">Отмена</button>
-<button class="btn-primary" onclick="submitNews()">Опубликовать</button>
+<button class="btn-primary" onclick="submitNewsForm()">Опубликовать</button>
 </div>
 
 </div>
@@ -2314,11 +2565,16 @@ el.classList.toggle('show', isAdmin);
 
 }
 
-/* ---------- NEWS (Firestore, видно всем в реальном времени) ---------- */
+/* ---------- NEWS / POLLS / QUIZZES (Firestore, видно всем в реальном времени) ---------- */
+
+let currentNewsType = 'news';
+let optionRowCounter = 0;
 
 function openNewsForm(){
 
 document.getElementById('newsOverlay').classList.add('open');
+
+selectNewsType('news');
 
 }
 
@@ -2330,17 +2586,97 @@ document.getElementById('newsTitle').value = '';
 
 document.getElementById('newsText').value = '';
 
+document.getElementById('pollQuestion').value = '';
+
+document.getElementById('quizQuestion').value = '';
+
+document.getElementById('pollOptionsList').innerHTML = '';
+
+document.getElementById('quizOptionsList').innerHTML = '';
+
+document.getElementById('newsFormError').style.display = 'none';
+
 }
 
-function submitNews(){
+function selectNewsType(type){
+
+currentNewsType = type;
+
+['news','poll','quiz'].forEach(t=>{
+
+document.getElementById('tabBtn-'+t).classList.toggle('active', t===type);
+
+document.getElementById('panel-'+t).classList.toggle('active', t===type);
+
+});
+
+if(type === 'poll' && document.getElementById('pollOptionsList').children.length === 0){
+
+addOptionRow('pollOptionsList');
+
+addOptionRow('pollOptionsList');
+
+}
+
+if(type === 'quiz' && document.getElementById('quizOptionsList').children.length === 0){
+
+addOptionRow('quizOptionsList', true);
+
+addOptionRow('quizOptionsList', true);
+
+}
+
+}
+
+function addOptionRow(listId, isQuiz){
+
+const list = document.getElementById(listId);
+
+const rowId = 'opt-' + (optionRowCounter++);
+
+const row = document.createElement('div');
+
+row.className = 'poll-option-row';
+
+row.id = rowId;
+
+const radioName = listId === 'quizOptionsList' ? 'quizCorrectRadio' : '';
+
+row.innerHTML = (isQuiz ? `<input type="radio" name="${radioName}" class="quiz-correct-radio" title="Правильный ответ">` : '') +
+
+`<input type="text" placeholder="Вариант ответа">` +
+
+`<button type="button" class="poll-option-remove" onclick="document.getElementById('${rowId}').remove()">✕</button>`;
+
+list.appendChild(row);
+
+}
+
+function submitNewsForm(){
+
+const errEl = document.getElementById('newsFormError');
+
+errEl.style.display = 'none';
+
+if(currentNewsType === 'news'){
 
 const title = document.getElementById('newsTitle').value.trim();
 
 const text = document.getElementById('newsText').value.trim();
 
-if(!title || !text) return;
+if(!title || !text){
+
+errEl.textContent = 'Заполните заголовок и текст новости.';
+
+errEl.style.display = 'block';
+
+return;
+
+}
 
 db.collection('news').add({
+
+type: 'news',
 
 title: title,
 
@@ -2348,23 +2684,147 @@ text: text,
 
 createdAt: firebase.firestore.FieldValue.serverTimestamp()
 
-}).then(()=>{
-
-closeNewsForm();
-
-}).catch(err=>{
+}).then(()=>{ closeNewsForm(); }).catch(err=>{
 
 alert('Не удалось сохранить новость: ' + err.message);
 
 });
 
+return;
+
+}
+
+if(currentNewsType === 'poll'){
+
+const question = document.getElementById('pollQuestion').value.trim();
+
+const optionInputs = document.querySelectorAll('#pollOptionsList input[type="text"]');
+
+const options = Array.from(optionInputs).map(i=>i.value.trim()).filter(v=>v.length>0);
+
+if(!question || options.length < 2){
+
+errEl.textContent = 'Введите вопрос и минимум 2 варианта ответа.';
+
+errEl.style.display = 'block';
+
+return;
+
+}
+
+db.collection('news').add({
+
+type: 'poll',
+
+title: question,
+
+options: options,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).then(()=>{ closeNewsForm(); }).catch(err=>{
+
+alert('Не удалось создать опрос: ' + err.message);
+
+});
+
+return;
+
+}
+
+if(currentNewsType === 'quiz'){
+
+const question = document.getElementById('quizQuestion').value.trim();
+
+const rows = document.querySelectorAll('#quizOptionsList .poll-option-row');
+
+const options = [];
+
+let correctIndex = -1;
+
+rows.forEach((row, idx)=>{
+
+const textVal = row.querySelector('input[type="text"]').value.trim();
+
+const radio = row.querySelector('input[type="radio"]');
+
+if(textVal.length > 0){
+
+options.push(textVal);
+
+if(radio && radio.checked) correctIndex = options.length - 1;
+
+}
+
+});
+
+if(!question || options.length < 2 || correctIndex === -1){
+
+errEl.textContent = 'Введите вопрос, минимум 2 варианта и отметьте правильный ответ.';
+
+errEl.style.display = 'block';
+
+return;
+
+}
+
+db.collection('news').add({
+
+type: 'quiz',
+
+title: question,
+
+options: options,
+
+correctIndex: correctIndex,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).then(()=>{ closeNewsForm(); }).catch(err=>{
+
+alert('Не удалось создать викторину: ' + err.message);
+
+});
+
+return;
+
+}
+
 }
 
 function deleteNews(id){
 
+if(!confirm('Удалить эту публикацию?')) return;
+
 db.collection('news').doc(id).delete();
 
+if(pollListeners[id]){
+
+pollListeners[id]();
+
+delete pollListeners[id];
+
 }
+
+}
+
+function getVoterId(){
+
+let vid = localStorage.getItem('blc_voter_id');
+
+if(!vid){
+
+vid = 'v_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+
+localStorage.setItem('blc_voter_id', vid);
+
+}
+
+return vid;
+
+}
+
+const pollListeners = {};
 
 function renderNewsFromDocs(docs){
 
@@ -2376,17 +2836,199 @@ docs.forEach(doc=>{
 
 const n = doc.data();
 
+const type = n.type || 'news';
+
 const card = document.createElement('div');
 
 card.className = 'card custom-news';
 
+card.id = 'newscard-' + doc.id;
+
+if(type === 'news'){
+
 card.innerHTML = `<h3 style="display:flex;justify-content:space-between;align-items:center;">📰 ${escapeHtml(n.title)} <button class="remove-x" onclick="deleteNews('${doc.id}')">✕</button></h3><p>${escapeHtml(n.text)}</p>`;
 
+}else if(type === 'poll'){
+
+const badge = '<span class="poll-badge">ОПРОС</span>';
+
+const optionsHtml = (n.options||[]).map((opt,idx)=>`
+
+<div class="poll-option-bar" id="pollopt-${doc.id}-${idx}" onclick="voteOption('${doc.id}',${idx},'poll')">
+
+<div class="fill-bg" id="pollfill-${doc.id}-${idx}" style="width:0%;"></div>
+
+<div class="poll-option-content"><span>${escapeHtml(opt)}</span><span class="poll-option-pct" id="pollpct-${doc.id}-${idx}"></span></div>
+
+</div>`).join('');
+
+card.innerHTML = `<h3 style="display:flex;justify-content:space-between;align-items:center;">📊 ${escapeHtml(n.title)}${badge} <button class="remove-x" onclick="deleteNews('${doc.id}')">✕</button></h3>${optionsHtml}<div class="poll-meta" id="pollmeta-${doc.id}">Голосов: 0</div>`;
+
+}else if(type === 'quiz'){
+
+const badge = '<span class="quiz-badge">ВИКТОРИНА</span>';
+
+const optionsHtml = (n.options||[]).map((opt,idx)=>`
+
+<div class="poll-option-bar" id="pollopt-${doc.id}-${idx}" onclick="voteOption('${doc.id}',${idx},'quiz')">
+
+<div class="fill-bg" id="pollfill-${doc.id}-${idx}" style="width:0%;"></div>
+
+<div class="poll-option-content"><span>${escapeHtml(opt)}</span><span class="poll-option-pct" id="pollpct-${doc.id}-${idx}"></span></div>
+
+</div>`).join('');
+
+card.innerHTML = `<h3 style="display:flex;justify-content:space-between;align-items:center;">🧠 ${escapeHtml(n.title)}${badge} <button class="remove-x" onclick="deleteNews('${doc.id}')">✕</button></h3>${optionsHtml}<div class="poll-meta" id="pollmeta-${doc.id}">Ответов: 0</div><div class="quiz-feedback" id="quizfeedback-${doc.id}"></div>`;
+
+}
+
 list.appendChild(card);
+
+if(type === 'poll' || type === 'quiz'){
+
+subscribeToVotes(doc.id, n.options ? n.options.length : 0, type, n.correctIndex);
+
+}
 
 });
 
 updateAdminUI();
+
+}
+
+function voteOption(newsId, optionIndex, type){
+
+const votedKey = 'blc_voted_' + newsId;
+
+if(localStorage.getItem(votedKey) !== null) return; // уже голосовал/отвечал с этого браузера
+
+localStorage.setItem(votedKey, String(optionIndex));
+
+db.collection('news').doc(newsId).collection('votes').add({
+
+optionIndex: optionIndex,
+
+voterId: getVoterId(),
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).catch(err=>{
+
+console.error('Firestore vote error:', err);
+
+});
+
+}
+
+function subscribeToVotes(newsId, optionsCount, type, correctIndex){
+
+if(pollListeners[newsId]) return;
+
+const unsubscribe = db.collection('news').doc(newsId).collection('votes').onSnapshot(snapshot=>{
+
+const counts = new Array(optionsCount).fill(0);
+
+snapshot.forEach(d=>{
+
+const idx = d.data().optionIndex;
+
+if(idx >= 0 && idx < optionsCount) counts[idx]++;
+
+});
+
+const total = counts.reduce((a,b)=>a+b,0);
+
+const votedKey = 'blc_voted_' + newsId;
+
+const myAnswer = localStorage.getItem(votedKey);
+
+for(let i=0;i<optionsCount;i++){
+
+const fillEl = document.getElementById('pollfill-'+newsId+'-'+i);
+
+const pctEl = document.getElementById('pollpct-'+newsId+'-'+i);
+
+const barEl = document.getElementById('pollopt-'+newsId+'-'+i);
+
+if(!fillEl) continue;
+
+const pct = total > 0 ? Math.round((counts[i]/total)*100) : 0;
+
+fillEl.style.width = pct + '%';
+
+pctEl.textContent = counts[i] + ' (' + pct + '%)';
+
+if(myAnswer !== null){
+
+barEl.classList.add('voted');
+
+if(type === 'quiz'){
+
+if(i === correctIndex) barEl.classList.add('correct');
+
+else if(String(i) === myAnswer) barEl.classList.add('wrong');
+
+}
+
+}
+
+}
+
+const metaEl = document.getElementById('pollmeta-'+newsId);
+
+if(metaEl) metaEl.textContent = (type === 'quiz' ? 'Ответов: ' : 'Голосов: ') + total;
+
+if(type === 'quiz' && myAnswer !== null){
+
+const fb = document.getElementById('quizfeedback-'+newsId);
+
+if(fb){
+
+if(parseInt(myAnswer,10) === correctIndex){
+
+fb.textContent = '✅ Верно!';
+
+fb.className = 'quiz-feedback ok';
+
+}else{
+
+fb.textContent = '❌ Неверно.';
+
+fb.className = 'quiz-feedback no';
+
+}
+
+}
+
+}
+
+}, err=>{
+
+console.error('Firestore votes error:', err);
+
+});
+
+pollListeners[newsId] = unsubscribe;
+
+}
+
+/* ---------- УДАЛЕНИЕ БАЗОВЫХ (встроенных) РАЗДЕЛОВ ---------- */
+
+function hideBaseItem(key){
+
+if(!confirm('Удалить этот раздел для всех посетителей сайта?')) return;
+
+db.collection('hiddenDefaults').doc(key).set({
+
+hidden: true,
+
+createdAt: firebase.firestore.FieldValue.serverTimestamp()
+
+}).catch(err=>{
+
+alert('Не удалось удалить: ' + err.message);
+
+});
 
 }
 
@@ -3177,6 +3819,24 @@ renderSavingsFromDocs(snapshot.docs);
 }, err=>{
 
 console.error('Firestore savings error:', err);
+
+});
+
+// живая синхронизация удалённых базовых разделов (роли/новости) для ВСЕХ посетителей
+
+db.collection('hiddenDefaults').onSnapshot(snapshot=>{
+
+snapshot.forEach(doc=>{
+
+const el = document.querySelector('[data-basekey="' + doc.id + '"]');
+
+if(el) el.style.display = 'none';
+
+});
+
+}, err=>{
+
+console.error('Firestore hiddenDefaults error:', err);
 
 });
 
